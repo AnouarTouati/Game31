@@ -1,0 +1,5 @@
+-The ball would break if it falls too hard on the platforms (also good for diffuculty)
+-Bounciness of the ball make it harder to play(jelly like)
+-modify the drag and mass at realtime to make the game interresting and harder
+-variation in turning speed of platforms is good idea
+-jump force has jitter
