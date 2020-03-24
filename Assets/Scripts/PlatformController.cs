@@ -12,8 +12,9 @@ public class PlatformController : MonoBehaviour
     public float UpForceMagnitude;
 
     private float ClockWiseSpeed=0.1f;
-    private float CounterClockWiseSpeed=1f;
-    private float JumpVelocity =70f;
+    private float CounterClockWiseSpeed=3f;
+    private float JumpVelocity =10f;
+   
     private ContactPoint ContactPoint;
     private bool IsInContactWithBall = false;
     private Rigidbody BallRigidbody;
@@ -21,7 +22,7 @@ public class PlatformController : MonoBehaviour
 
     public float Zposition = 0f;
     private bool isMoving = true;
-    private bool JumpedFromThisPlatform;
+   
     
     void Update()
     {
@@ -55,26 +56,33 @@ public class PlatformController : MonoBehaviour
             if (IsInContactWithBall)
             {
                 float JumpMagnitude;
-                if (transform.rotation.eulerAngles.x > 3 && transform.rotation.eulerAngles.x < 180)
+              /*  if (transform.rotation.eulerAngles.x > 5 && transform.rotation.eulerAngles.x < 180)
                 {
-                    JumpMagnitude = JumpVelocity * Mathf.Clamp(Mathf.Abs(transform.position.y - BallTransform.position.y), 0.1f, 1f);
-
+                    JumpMagnitude = JumpVelocity * Mathf.Clamp(2*Mathf.Abs(transform.position.y - BallTransform.position.y), 0.1f, 1f);
+                }
+                else
+                {
+                    JumpMagnitude = 0f;
+                }*/
+                if(BallTransform.position.z>transform.position.z && BallTransform.position.z < (transform.position.z + 2.5f))
+                    {
+                    float value = Mathf.Abs(BallTransform.position.z - transform.position.z);
+                    JumpMagnitude = JumpVelocity * Mathf.Clamp(value * Mathf.Abs(transform.position.y - BallTransform.position.y), 0.1f, 1f);
+                    Debug.Log("Jump Vector " + JumpMagnitude);
                 }
                 else
                 {
                     JumpMagnitude = 0f;
                 }
-                Debug.Log("Jump Magnitude = " + JumpMagnitude);
                 Vector3 JumpVector = JumpMagnitude * (-ContactPoint.normal);
                 JumpVector.x = BallRigidbody.velocity.x;
                 JumpVector.z=BallRigidbody.velocity.z;
-
-                Debug.Log("JumpVector = " + JumpVector);
+                
                 BallRigidbody.velocity = JumpVector;
 
             }
-
-            GetComponent<Transform>().RotateAroundLocal(GetComponent<Transform>().right, -CounterClockWiseSpeed * Time.deltaTime);
+           
+              GetComponent<Transform>().RotateAroundLocal(GetComponent<Transform>().right, -CounterClockWiseSpeed * Time.deltaTime);
             
         }
         else
@@ -89,7 +97,7 @@ public class PlatformController : MonoBehaviour
             }
             
         }
-        
+   
 
     }
 
@@ -115,15 +123,13 @@ public class PlatformController : MonoBehaviour
         BallRigidbody = collision.collider.attachedRigidbody;
         BallTransform = collision.collider.transform;
         Zposition = BallTransform.position.z;
-        ContactPoint = collision.GetContact(0);
-        
-        
+        ContactPoint = collision.GetContact(0); 
     }
     private void OnCollisionExit(Collision collision)
     {
         IsInContactWithBall = false;
         BallRigidbody = null;
         BallTransform = null;
-        Debug.Log("Collision Exit");
     }
+   
 }
