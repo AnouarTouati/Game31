@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class PlatformController : MonoBehaviour
 {
-    [HideInInspector]
-    public Transform DownForcePosition;
-    [HideInInspector]
-    public float DownForceMagnitude;
-    [HideInInspector]
-    public float UpForceMagnitude;
+    [Header("Level Difficulty Control")]
+    public int ClockWiseSpeedMultiplier;
+    public int CounterClockWiseSpeedMultiplier;
+    public int JumpVelocityMultiplier;
+
 
     private float ClockWiseSpeed=0.1f;
     private float CounterClockWiseSpeed=3f;
@@ -20,7 +19,7 @@ public class PlatformController : MonoBehaviour
     private Rigidbody BallRigidbody;
     private Transform BallTransform;
 
-    public float Zposition = 0f;
+    private float Zposition = 0f;
     private bool isMoving = true;
    
     
@@ -68,7 +67,6 @@ public class PlatformController : MonoBehaviour
                     {
                     float value = Mathf.Abs(BallTransform.position.z - transform.position.z);
                     JumpMagnitude = JumpVelocity * Mathf.Clamp(value * Mathf.Abs(transform.position.y - BallTransform.position.y), 0.1f, 1f);
-                    Debug.Log("Jump Vector " + JumpMagnitude);
                 }
                 else
                 {
@@ -101,22 +99,6 @@ public class PlatformController : MonoBehaviour
 
     }
 
-    private void MoveUsingPhysics()
-    {
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-            Vector3 UpForceVector = UpForceMagnitude * DownForcePosition.up;
-            Debug.Log("UpForceVector = " + UpForceVector);
-            GetComponent<Rigidbody>().AddForceAtPosition(UpForceVector, DownForcePosition.position);
-        }
-        else
-        {
-            Vector3 DownForceVector = DownForceMagnitude * -DownForcePosition.up;
-            Debug.Log("DownForceVector = " + DownForceVector);
-            GetComponent<Rigidbody>().AddForceAtPosition(DownForceVector, DownForcePosition.position);
-        }
-    }
     private void OnCollisionEnter(Collision collision)
     {
         IsInContactWithBall = true;
