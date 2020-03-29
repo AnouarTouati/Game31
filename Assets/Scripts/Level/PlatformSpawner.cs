@@ -14,6 +14,8 @@ public class PlatformSpawner : MonoBehaviour
         {
             Instantiate(PlatformPrefab, FirstPlatformTransform.position + new Vector3(0, 0, DistanceBetweenPlatform*i),FirstPlatformTransform.rotation,transform);
         }
+        Instantiate(PlatformPrefab, FirstPlatformTransform.position + new Vector3(0, 0, DistanceBetweenPlatform * NumberOfPlatforms), FirstPlatformTransform.rotation, transform)
+            .GetComponent<PlatformController>().SetFinalPlatform(true);
     }
 
     

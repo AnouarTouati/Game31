@@ -107,7 +107,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43e58fec80395d3488965049f8020d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ClockWiseSpeedMultiplier: 1
+  NormalMaterial: {fileID: 2100000, guid: f62289e16f531ab4088dc56acefabe6e, type: 2}
+  FinalPlatformMaterial: {fileID: 2100000, guid: abb02b2f54e33404b9e2c639aec21426,
+    type: 2}
+  ClockWiseSpeedMultiplier: 4.6
   CounterClockWiseSpeedMultiplier: 1
   JumpVelocityMultiplier: 1
 --- !u!1 &2354706394220642769
