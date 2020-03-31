@@ -8,10 +8,14 @@ public class SceneAndGUI : MonoBehaviour
     public GameObject LostGUI;
     public GameObject FinishGUI;
     public bool DidFinishedLevel = false;
+    public GameObject WinVFXPrefab;
+    public Transform BallTransform;
     private void Start()
     {
         LostGUI.SetActive(false) ;
     }
+
+   
 
     public void Lost()
     { 
@@ -20,6 +24,8 @@ public class SceneAndGUI : MonoBehaviour
     }
     public void FinishedLevel()
     {
+        GameObject GO = Instantiate(WinVFXPrefab, BallTransform.position, Quaternion.identity);
+        GO.GetComponent<ParticleSystem>().Play();
         DidFinishedLevel = true;
         FinishGUI.SetActive(true);
     }

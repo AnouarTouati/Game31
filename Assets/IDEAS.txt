@@ -3,3 +3,6 @@
 -modify the drag and mass at realtime to make the game interresting and harder
 -variation in turning speed of platforms is good idea
 -jump force has jitter
+-collectables mid air effect platform shader like power ups and stuff
+-visuals play on the wall 
+-camera vibration when Skipping Platforms with pickables + particle effects

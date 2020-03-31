@@ -11,6 +11,8 @@ public class PlatformController : MonoBehaviour
     public float CounterClockWiseSpeedMultiplier;
     [Range(0.1f,2)]
     public float JumpVelocityMultiplier;
+    [Range(0.1f, 4)]
+    public float PlatformLengthMultiplier;
 
     private SceneAndGUI SceneAndGUI;
 
@@ -27,9 +29,11 @@ public class PlatformController : MonoBehaviour
     private float Zposition = 0f;
     private bool isMoving = true;
 
+    public bool IsPlatformAlreadyUsed=false;
 
     private void Start()
     {
+        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z* PlatformLengthMultiplier);
         if (!IsFinalPlatform)
         {
             GetComponent<Renderer>().material = NormalMaterial;
@@ -120,6 +124,7 @@ public class PlatformController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        IsPlatformAlreadyUsed = true;
         if (!IsFinalPlatform)
         {
             IsInContactWithBall = true;
