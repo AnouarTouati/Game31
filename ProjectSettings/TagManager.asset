@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Pickables
+  - SkipPlatformsVFXTag
   layers:
   - Default
   - TransparentFX

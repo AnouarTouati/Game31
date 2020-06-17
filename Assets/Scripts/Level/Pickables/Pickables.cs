@@ -6,7 +6,5 @@ public class Pickables : MonoBehaviour
 {
     public bool SkipPlatforms;
     public int NumberOfPlatformsToSkip;
-
- 
 }
 

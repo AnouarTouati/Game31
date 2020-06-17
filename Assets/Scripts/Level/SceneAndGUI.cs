@@ -9,14 +9,21 @@ public class SceneAndGUI : MonoBehaviour
     public GameObject FinishGUI;
     public bool DidFinishedLevel = false;
     public GameObject WinVFXPrefab;
-    public Transform BallTransform;
+    
+    public GameObject Ball;
     private void Start()
     {
         LostGUI.SetActive(false) ;
     }
-
-   
-
+/*
+   public void PlaySkipPlatformsParticles()
+    {
+        GameObject GO = Instantiate(SkipPlatformsVFXPrefab, Ball.GetComponent<Transform>().position, Quaternion.identity);
+        GO.GetComponent<ParticleSystem>().Play();
+        Ball.GetComponent<Ball>().SkipPlatformsVFX = GO;
+        //this gameobject will follow the ball using the Ball script
+    }
+    */
     public void Lost()
     { 
         LostGUI.SetActive(true);
@@ -24,7 +31,7 @@ public class SceneAndGUI : MonoBehaviour
     }
     public void FinishedLevel()
     {
-        GameObject GO = Instantiate(WinVFXPrefab, BallTransform.position, Quaternion.identity);
+        GameObject GO = Instantiate(WinVFXPrefab, Ball.GetComponent<Transform>().position, Quaternion.identity);
         GO.GetComponent<ParticleSystem>().Play();
         DidFinishedLevel = true;
         FinishGUI.SetActive(true);
