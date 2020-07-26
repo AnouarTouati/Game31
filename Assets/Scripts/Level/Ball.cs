@@ -7,8 +7,8 @@ public class Ball : MonoBehaviour
     public PlatformSpawner PlatformSpawner;
     public SceneAndGUI SceneAndGUI; 
     public GameObject SkipPlatformsVFXPrefab;
-   // public GameObject SkipPlatformsVFX;
-
+    // public GameObject SkipPlatformsVFX;
+    private GameObject SkipPlatformsVFXObject;
     void Start()
     {
         
@@ -55,10 +55,10 @@ public class Ball : MonoBehaviour
         //here assuming that contact point is higher than platform y at all cases
         CentralPoint.y= HitPostiion.y + ((HitPostiion.z - PlatformSpawner.GetPlatforms()[DestinationPlatformIndex].GetComponent<Transform>().position.z) / 2);
         float RadiusSquared =Mathf.Pow(Vector2.Distance(CentralPoint, new Vector2(HitPostiion.z, HitPostiion.y)),2);
-        GameObject GO = Instantiate(SkipPlatformsVFXPrefab, GetComponent<Transform>().position, Quaternion.identity);
-        GO.GetComponent<ParticleSystem>().Play();
+       SkipPlatformsVFXObject = Instantiate(SkipPlatformsVFXPrefab, GetComponent<Transform>().position, Quaternion.identity);
+        SkipPlatformsVFXObject.GetComponent<ParticleSystem>().Play();
        
-        StartCoroutine(MoveTheBallInCircle(CentralPoint, RadiusSquared, PlatformSpawner.GetPlatforms()[DestinationPlatformIndex].GetComponent<Transform>().position.z,GO));
+        StartCoroutine(MoveTheBallInCircle(CentralPoint, RadiusSquared, PlatformSpawner.GetPlatforms()[DestinationPlatformIndex].GetComponent<Transform>().position.z, SkipPlatformsVFXObject));
         
 
     }
@@ -96,6 +96,11 @@ public class Ball : MonoBehaviour
             {
                 StartCoroutine(MoveTheBallInCircle(CentralPoint, RadiusSquared, FinalZPosition,SkipPlatformsVFX));
             }
+            else
+        {
+            Destroy(SkipPlatformsVFXObject);
+            SkipPlatformsVFXObject = null;
+        }
         // float angle= Vector3.Angle(new Vector3(0, 0, 1), transform.position - SkipPlatformsVFX.GetComponent<Transform>().position);
         float angle = Vector3.SignedAngle(new Vector3(0, 0, 1), transform.position - SkipPlatformsVFX.GetComponent<Transform>().position, new Vector3(1, 0, 0)); 
                SkipPlatformsVFX.GetComponent<Transform>().position = transform.position;

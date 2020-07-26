@@ -51,7 +51,7 @@ public class SceneAndGUI : MonoBehaviour
         }
         else
         {
-            Debug.LogError("MyErrors : There is no next scene to load");
+          //  Debug.LogError("MyErrors : There is no next scene to load");
         }
        
     }
