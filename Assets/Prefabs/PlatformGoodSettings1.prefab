@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2354706392979859812}
   m_Layer: 0
   m_Name: PlatformGoodSettings1
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,6 +114,7 @@ MonoBehaviour:
   CounterClockWiseSpeedMultiplier: 1
   JumpVelocityMultiplier: 1
   PlatformLengthMultiplier: 1
+  IsPlatformAlreadyUsed: 0
 --- !u!1 &2354706394220642769
 GameObject:
   m_ObjectHideFlags: 0

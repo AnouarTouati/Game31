@@ -9,6 +9,7 @@ public class Ball : MonoBehaviour
     public GameObject SkipPlatformsVFXPrefab;
     // public GameObject SkipPlatformsVFX;
     private GameObject SkipPlatformsVFXObject;
+    public AudioScript audioScript;
     void Start()
     {
         
@@ -25,9 +26,12 @@ public class Ball : MonoBehaviour
         {
             if (collision.collider.gameObject.GetComponent<Pickables>().SkipPlatforms)
             {
-                SkipPlatforms(collision.collider.transform.position, collision.collider.gameObject.GetComponent<Pickables>().NumberOfPlatformsToSkip);
+                SkipPlatforms(transform.position, collision.collider.gameObject.GetComponent<Pickables>().NumberOfPlatformsToSkip);
             }
             Destroy(collision.collider.gameObject);
+        } else if (collision.collider.transform.tag == "Platform")
+        {
+            audioScript.PlayPlatformHit();
         }
        
     }
@@ -53,14 +57,15 @@ public class Ball : MonoBehaviour
         Vector2 CentralPoint = new Vector2();
         CentralPoint.x = HitPostiion.z + ((PlatformSpawner.GetPlatforms()[DestinationPlatformIndex].GetComponent<Transform>().position.z - HitPostiion.z)/2);
         //here assuming that contact point is higher than platform y at all cases
-        CentralPoint.y= HitPostiion.y + ((HitPostiion.z - PlatformSpawner.GetPlatforms()[DestinationPlatformIndex].GetComponent<Transform>().position.z) / 2);
+         CentralPoint.y= PlatformSpawner.GetPlatforms()[DestinationPlatformIndex].GetComponent<Transform>().position.y + ((HitPostiion.y - PlatformSpawner.GetPlatforms()[DestinationPlatformIndex].GetComponent<Transform>().position.y) / 2);
+       CentralPoint -= new Vector2(1, 2);
+        
         float RadiusSquared =Mathf.Pow(Vector2.Distance(CentralPoint, new Vector2(HitPostiion.z, HitPostiion.y)),2);
        SkipPlatformsVFXObject = Instantiate(SkipPlatformsVFXPrefab, GetComponent<Transform>().position, Quaternion.identity);
         SkipPlatformsVFXObject.GetComponent<ParticleSystem>().Play();
-       
-        StartCoroutine(MoveTheBallInCircle(CentralPoint, RadiusSquared, PlatformSpawner.GetPlatforms()[DestinationPlatformIndex].GetComponent<Transform>().position.z, SkipPlatformsVFXObject));
-        
-
+        GetComponent<Rigidbody>().isKinematic = true;
+        StartCoroutine(MoveTheBallInCircle(CentralPoint, RadiusSquared, PlatformSpawner.GetPlatforms()[DestinationPlatformIndex].GetComponent<Transform>().position.y, SkipPlatformsVFXObject));
+        audioScript.PlaySkipBoard();
     }
     /*
     IEnumerator MoveTheBallInArchToDestinations(float HalfWayZposition,float FinalZPosition)
@@ -83,7 +88,7 @@ public class Ball : MonoBehaviour
 
     }
     */
-    IEnumerator MoveTheBallInCircle(Vector2 CentralPoint, float RadiusSquared, float FinalZPosition,GameObject SkipPlatformsVFX)
+    IEnumerator MoveTheBallInCircle(Vector2 CentralPoint, float RadiusSquared, float FinalYPosition,GameObject SkipPlatformsVFX)
     {
      
         yield return new WaitForFixedUpdate();
@@ -91,15 +96,18 @@ public class Ball : MonoBehaviour
 
             //   Vector3 PreviousPosition = transform.position;//just for particles system
             transform.position += new Vector3(0, 0, 5f * Time.deltaTime);
-            transform.position = new Vector3(transform.position.x, CentralPoint.y + Mathf.Sqrt(RadiusSquared - Mathf.Pow(transform.position.z - CentralPoint.x, 2)), transform.position.z);
-            if (transform.position.z < FinalZPosition)
+      
+            transform.position = new Vector3(transform.position.x,CentralPoint.y + Mathf.Sqrt(RadiusSquared - Mathf.Pow(transform.position.z - CentralPoint.x, 2)), transform.position.z);
+            
+        if (transform.position.y > FinalYPosition+1f)
             {
-                StartCoroutine(MoveTheBallInCircle(CentralPoint, RadiusSquared, FinalZPosition,SkipPlatformsVFX));
+                StartCoroutine(MoveTheBallInCircle(CentralPoint, RadiusSquared, FinalYPosition,SkipPlatformsVFX));
             }
             else
         {
             Destroy(SkipPlatformsVFXObject);
             SkipPlatformsVFXObject = null;
+            GetComponent<Rigidbody>().isKinematic = false;
         }
         // float angle= Vector3.Angle(new Vector3(0, 0, 1), transform.position - SkipPlatformsVFX.GetComponent<Transform>().position);
         float angle = Vector3.SignedAngle(new Vector3(0, 0, 1), transform.position - SkipPlatformsVFX.GetComponent<Transform>().position, new Vector3(1, 0, 0)); 

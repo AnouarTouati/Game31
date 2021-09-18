@@ -15,6 +15,7 @@ public class PlatformController : MonoBehaviour
     public float PlatformLengthMultiplier;
 
     private SceneAndGUI SceneAndGUI;
+  
 
     private bool IsFinalPlatform = false;
     private float ClockWiseSpeed=0.1f;
@@ -73,7 +74,7 @@ public class PlatformController : MonoBehaviour
 
 
 
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Space)|| Input.touchCount==1)
             {
                 if (IsInContactWithBall)
                 {

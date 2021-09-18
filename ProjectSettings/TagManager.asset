@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pickables
   - SkipPlatformsVFXTag
+  - Platform
   layers:
   - Default
   - TransparentFX

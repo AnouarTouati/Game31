@@ -9,6 +9,7 @@ public class SceneAndGUI : MonoBehaviour
     public GameObject FinishGUI;
     public bool DidFinishedLevel = false;
     public GameObject WinVFXPrefab;
+    public AudioScript audioScript;
     
     public GameObject Ball;
     private void Start()
@@ -27,12 +28,14 @@ public class SceneAndGUI : MonoBehaviour
     public void Lost()
     { 
         LostGUI.SetActive(true);
+        audioScript.PlayLost();
         Time.timeScale = 0;
     }
     public void FinishedLevel()
     {
         GameObject GO = Instantiate(WinVFXPrefab, Ball.GetComponent<Transform>().position, Quaternion.identity);
         GO.GetComponent<ParticleSystem>().Play();
+        audioScript.PlayWin();
         DidFinishedLevel = true;
         FinishGUI.SetActive(true);
     }
