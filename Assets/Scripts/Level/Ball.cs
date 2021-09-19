@@ -4,22 +4,13 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    public PlatformSpawner PlatformSpawner;
-    public SceneAndGUI SceneAndGUI; 
-    public GameObject SkipPlatformsVFXPrefab;
+    [SerializeField] PlatformSpawner PlatformSpawner;
+    [SerializeField] SceneAndGUI SceneAndGUI; 
+    [SerializeField] GameObject SkipPlatformsVFXPrefab;
     // public GameObject SkipPlatformsVFX;
-    private GameObject SkipPlatformsVFXObject;
-    public AudioScript audioScript;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    
-    }
+    [SerializeField] GameObject SkipPlatformsVFXObject;
+    [SerializeField] AudioScript audioScript;
+   
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.transform.tag=="Pickables")
@@ -36,8 +27,9 @@ public class Ball : MonoBehaviour
        
     }
 
-    public void SkipPlatforms(Vector3 HitPostiion, int NumberPlatformToSkip)
+    private void SkipPlatforms(Vector3 HitPostiion, int NumberPlatformToSkip)
     {
+        
         float HalfWayZposition;
 
         int LaunchingPlatformIndex = -1;
@@ -88,7 +80,7 @@ public class Ball : MonoBehaviour
 
     }
     */
-    IEnumerator MoveTheBallInCircle(Vector2 CentralPoint, float RadiusSquared, float FinalYPosition,GameObject SkipPlatformsVFX)
+   private IEnumerator MoveTheBallInCircle(Vector2 CentralPoint, float RadiusSquared, float FinalYPosition,GameObject SkipPlatformsVFX)
     {
      
         yield return new WaitForFixedUpdate();

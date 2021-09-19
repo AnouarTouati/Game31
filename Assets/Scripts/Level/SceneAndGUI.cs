@@ -6,22 +6,24 @@ using UnityEngine.UI;
 public class SceneAndGUI : MonoBehaviour
 {
 
-    public GameObject LostGUI;
-    public GameObject FinishGUI;
-    public GameObject WatchAdGUI;
-    public GameObject AdFailedGUI;
-    public Text LivesCount;
-    public bool DidFinishedLevel = false;
-    public GameObject WinVFXPrefab;
-    public AudioScript audioScript;
-    public string ActiveSceneName;
-    public GameObject Ball;
-    public RewardedAdsButton rewardedAdsButton;
+    [SerializeField] GameObject LostGUI;
+    [SerializeField] GameObject FinishGUI;
+    [SerializeField] GameObject WatchAdGUI;
+    [SerializeField] GameObject AdFailedGUI;
+    [SerializeField] Text LivesCount;
+    [SerializeField] bool didFinishLevel = false;
+    public bool DidFinishLevel
+    {
+        get { return didFinishLevel; }
+    }
+    [SerializeField] GameObject WinVFXPrefab;
+    [SerializeField] AudioScript audioScript;
+    [SerializeField] GameObject Ball;
+    [SerializeField] RewardedAdsButton rewardedAdsButton;
     private void Start()
     {
         LostGUI.SetActive(false) ;
         LivesCount.text = ""+GameSystem.Life;
-        ActiveSceneName = SceneManager.GetActiveScene().name;
     }
 
     /*
@@ -52,7 +54,7 @@ public class SceneAndGUI : MonoBehaviour
         GameObject GO = Instantiate(WinVFXPrefab, Ball.GetComponent<Transform>().position, Quaternion.identity);
         GO.GetComponent<ParticleSystem>().Play();
         audioScript.PlayWin();
-        DidFinishedLevel = true;
+        didFinishLevel = true;
         FinishGUI.SetActive(true);
     }
     public void Retry()
@@ -64,7 +66,6 @@ public class SceneAndGUI : MonoBehaviour
         else
         {
             Time.timeScale = 1;
-            ActiveSceneName = SceneManager.GetActiveScene().name;
            SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
         }
        
@@ -88,12 +89,12 @@ public class SceneAndGUI : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene(0,LoadSceneMode.Single);
     }
-    public void AskToWatchAd()
+    private void AskToWatchAd()
     {
         LostGUI.SetActive(false);
         WatchAdGUI.SetActive(true);
     }
-    public void AdWatchedSuccessfully() 
+    private void AdWatchedSuccessfully() 
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
@@ -106,8 +107,5 @@ public class SceneAndGUI : MonoBehaviour
         WatchAdGUI.SetActive(true);
         AdFailedGUI.SetActive(false);
     }
-    public string GetActiveSceneName()
-    {
-      return   ActiveSceneName;
-    }
+   
 }

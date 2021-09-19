@@ -8,9 +8,13 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     [SerializeField] string _androidAdUnitId = "Rewarded_Android";
     [SerializeField] string _iOsAdUnitId = "Rewarded_iOS";
     string _adUnitId;
-    public SceneAndGUI sceneAndGUI;
+    [SerializeField] SceneAndGUI sceneAndGUI;
 
-    public bool AdShown = false;
+    private bool adShown = false;
+    public bool AdShown
+    {
+        get { return adShown; }
+    }
     private bool AdLoadAttempted = false;
     private bool AdLoaded = false;
     void Awake()
@@ -27,9 +31,9 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     }
     void Update()
     {
-        if (AdShown)//so it remains true only for one frame
+        if (adShown)//so it remains true only for one frame
         {
-            AdShown = false;
+            adShown = false;
         }
         if (AdsInitializer.AlreadyInitialized && !AdLoadAttempted)
         {
@@ -45,7 +49,7 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         }
     }
     // Load content to the Ad Unit:
-    public void LoadAd()
+    private void LoadAd()
     {
         // IMPORTANT! Only load content AFTER initialization (in this example, initialization is handled in a different script).
         Debug.Log("Loading Ad: " + _adUnitId);
@@ -83,17 +87,8 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         {
             Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
-            /*
-            GameSystem.Life++;
-            if (sceneAndGUI != null)
-            {
-                if (!sceneAndGUI.GetActiveSceneName().Equals("MainMenu"))
-                {
-                    sceneAndGUI.AdWatchedSuccessfully();
-                }
-            }*/
             GameSystem.Life = GameSystem.Life+1;
-            AdShown = true;
+            adShown = true;
             AdLoaded = false;
             AdLoadAttempted = false;
             // Load another ad:

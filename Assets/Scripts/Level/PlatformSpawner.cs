@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlatformSpawner : MonoBehaviour
 {
-    public GameObject PlatformPrefab;
-    public Transform FirstPlatformTransform;
-    public float DistanceBetweenPlatform;
-    public int NumberOfPlatforms;
+    [SerializeField] GameObject PlatformPrefab;
+    [SerializeField] Transform FirstPlatformTransform;
+    [SerializeField] float DistanceBetweenPlatform;
+    [SerializeField] int NumberOfPlatforms;
     private List<GameObject> Platforms=new List<GameObject>();
     void Start()
     {

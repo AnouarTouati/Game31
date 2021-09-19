@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class Pickables : MonoBehaviour
 {
-    public bool SkipPlatforms;
-    public int NumberOfPlatformsToSkip;
+    [SerializeField] bool skipPlatforms;
+    [SerializeField] int numberOfPlatformsToSkip;
+    public bool SkipPlatforms
+    {
+        get { return skipPlatforms; }
+    }
+    public int NumberOfPlatformsToSkip
+    {
+        get { return numberOfPlatformsToSkip; }
+    }
 }
 

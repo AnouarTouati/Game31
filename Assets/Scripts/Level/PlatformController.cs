@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class PlatformController : MonoBehaviour
 {
-    public Material NormalMaterial;
-    public Material FinalPlatformMaterial;
+    [SerializeField] Material NormalMaterial;
+    [SerializeField] Material FinalPlatformMaterial;
     [Header("Level Difficulty Control")]
-    public float ClockWiseSpeedMultiplier;
-    public float CounterClockWiseSpeedMultiplier;
+    [SerializeField] float ClockWiseSpeedMultiplier;
+    [SerializeField] float CounterClockWiseSpeedMultiplier;
     [Range(0.1f,2)]
-    public float JumpVelocityMultiplier;
+    [SerializeField] float JumpVelocityMultiplier;
     [Range(0.1f, 4)]
-    public float PlatformLengthMultiplier;
+    [SerializeField] float PlatformLengthMultiplier;
 
     private SceneAndGUI SceneAndGUI;
   
@@ -30,7 +30,11 @@ public class PlatformController : MonoBehaviour
     private float Zposition = 0f;
     private bool isMoving = true;
 
-    public bool IsPlatformAlreadyUsed=false;
+    [SerializeField] bool isPlatformAlreadyUsed=false;
+    public bool IsPlatformAlreadyUsed
+    {
+        get { return isPlatformAlreadyUsed; }
+    }
 
     private void Start()
     {
@@ -47,7 +51,7 @@ public class PlatformController : MonoBehaviour
     }
     void Update()
     {
-        if (!IsFinalPlatform && !SceneAndGUI.DidFinishedLevel)
+        if (!IsFinalPlatform && !SceneAndGUI.DidFinishLevel)
         {
 
             if (IsInContactWithBall)
@@ -125,7 +129,7 @@ public class PlatformController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        IsPlatformAlreadyUsed = true;
+        isPlatformAlreadyUsed = true;
         if (!IsFinalPlatform)
         {
             IsInContactWithBall = true;

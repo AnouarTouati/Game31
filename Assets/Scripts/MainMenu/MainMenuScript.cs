@@ -6,20 +6,15 @@ using UnityEngine.UI;
 public class MainMenuScript : MonoBehaviour
 {
 
-    public Button Play;
-    public Text Lives;
-    public GameObject CountDownGUI;
-    public Text Time;
+    [SerializeField] Button Play;
+    [SerializeField] Text Lives;
+    [SerializeField] GameObject CountDownGUI;
+    [SerializeField] Text Time;
     private float TimeCounter;
-    public int MaxLivesAllowed;
-    public float TimeToWaitBeforeLivesRestore;
+    [SerializeField] int MaxLivesAllowed;
+    [SerializeField] float TimeToWaitBeforeLivesRestore;
     private bool CountDownStarted = false;
-    
-    void Start()
-    {
-        
-    }
-
+  
    
     void Update()
     {
@@ -52,7 +47,7 @@ public class MainMenuScript : MonoBehaviour
     {
         Application.Quit();
     }
-    IEnumerator CountDownToAddLives()
+    private IEnumerator CountDownToAddLives()
     {
         yield return new WaitForSeconds(TimeToWaitBeforeLivesRestore);
         CountDownGUI.SetActive(false);

@@ -8,14 +8,15 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     [SerializeField] bool _testMode = true;
     [SerializeField] bool _enablePerPlacementMode = true;
     private string _gameId;
-    public RewardedAdsButton rewardedAdsButton;
+    [SerializeField] RewardedAdsButton rewardedAdsButton;
     public static bool AlreadyInitialized=false;
+    
     void Awake()
     {
         InitializeAds();
     }
 
-    public void InitializeAds()
+    private void InitializeAds()
     {
         _gameId = (Application.platform == RuntimePlatform.IPhonePlayer)
             ? _iOsGameId

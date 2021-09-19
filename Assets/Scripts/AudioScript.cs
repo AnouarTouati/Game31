@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class AudioScript : MonoBehaviour
 {
-    
-    public  AudioSource audioSource;
-    public AudioSource mainMusic;
-    
-    public AudioClip[] audioClips;
+
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioSource mainMusic;
+
+    [SerializeField] AudioClip[] audioClips;
   
     public  void PlaySkipBoard()
     {
