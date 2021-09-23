@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ball : MonoBehaviour
+public class Ball : MonoBehaviour, IBall
 {
     [SerializeField] PlatformSpawner PlatformSpawner;
     [SerializeField] SceneAndGUI SceneAndGUI; 
@@ -10,7 +10,14 @@ public class Ball : MonoBehaviour
     // public GameObject SkipPlatformsVFX;
     [SerializeField] GameObject SkipPlatformsVFXObject;
     [SerializeField] AudioScript audioScript;
-   
+
+
+    public Vector3 Position => transform.position;
+
+    private void Start()
+    {
+        Mathf.Sqrt(-1);
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.transform.tag=="Pickables")
@@ -22,7 +29,11 @@ public class Ball : MonoBehaviour
             Destroy(collision.collider.gameObject);
         } else if (collision.collider.transform.tag == "Platform")
         {
-            audioScript.PlayPlatformHit();
+            if (!collision.collider.GetComponent<PlatformController>().IsPlatformAlreadyUsed)//prevents multiple hit sound
+            {
+                audioScript.PlayPlatformHit();
+            }
+            
         }
        
     }
@@ -89,7 +100,7 @@ public class Ball : MonoBehaviour
             //   Vector3 PreviousPosition = transform.position;//just for particles system
             transform.position += new Vector3(0, 0, 5f * Time.deltaTime);
       
-            transform.position = new Vector3(transform.position.x,CentralPoint.y + Mathf.Sqrt(RadiusSquared - Mathf.Pow(transform.position.z - CentralPoint.x, 2)), transform.position.z);
+            transform.position = new Vector3(transform.position.x,CentralPoint.y + Mathf.Sqrt(Mathf.Clamp(RadiusSquared - Mathf.Pow(transform.position.z - CentralPoint.x, 2),0.1f,999999)), transform.position.z);
             
         if (transform.position.y > FinalYPosition+1f)
             {
@@ -106,4 +117,9 @@ public class Ball : MonoBehaviour
                SkipPlatformsVFX.GetComponent<Transform>().position = transform.position;
                SkipPlatformsVFX.GetComponent<Transform>().rotation = Quaternion.Euler(angle-180, 0, 0);
     }
+}
+
+public interface IBall
+{
+    Vector3 Position { get; }
 }

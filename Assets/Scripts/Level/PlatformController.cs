@@ -146,6 +146,10 @@ public class PlatformController : MonoBehaviour
         }
       
     }
+    private void OnCollisionStay()
+    {
+
+    }
     private void OnCollisionExit(Collision collision)
     {
         if (!IsFinalPlatform)

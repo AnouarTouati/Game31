@@ -2,13 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowBallAtPlatformLevel : MonoBehaviour
+public class FollowBallAtPlatformLevel : MonoBehaviour, IFollowBallAtPlatformLevel
 {
 
-    [SerializeField] GameObject Ball;
-    
+    [SerializeField] Ball ball;
+   public Ball Ball { get { return ball; } set { ball = value; } }
+
+    public Vector3 Position { get =>transform.position; set => transform.position=value; }
+
+    private FollowBallAtPlatformLevelController followBallAtPlatformLevelController;
+    void Awake()
+    {
+        followBallAtPlatformLevelController = new FollowBallAtPlatformLevelController(this,ball);
+    }
     void Update()
     {
-        transform.position = new Vector3(transform.position.x,transform.position.y,Ball.transform.position.z);
+        if (ball != null)
+            followBallAtPlatformLevelController.FollowAlongZAxis();
     }
+  
+
+}
+public interface IFollowBallAtPlatformLevel
+{
+    Vector3 Position { get; set; }
+  
 }

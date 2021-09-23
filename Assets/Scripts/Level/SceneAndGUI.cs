@@ -23,7 +23,7 @@ public class SceneAndGUI : MonoBehaviour
     private void Start()
     {
         LostGUI.SetActive(false) ;
-        LivesCount.text = ""+GameSystem.Life;
+        LivesCount.text = ""+GameSystem.Lives;
     }
 
     /*
@@ -44,7 +44,7 @@ public class SceneAndGUI : MonoBehaviour
     }
     public void Lost()
     {
-        GameSystem.Life--;
+        GameSystem.Lives--;
         LostGUI.SetActive(true);
         audioScript.PlayLost();
         Time.timeScale = 0;
@@ -59,7 +59,7 @@ public class SceneAndGUI : MonoBehaviour
     }
     public void Retry()
     {
-        if (GameSystem.Life < 1)
+        if (GameSystem.Lives < 1)
         {
             AskToWatchAd();
         }

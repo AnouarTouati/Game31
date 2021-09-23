@@ -18,15 +18,15 @@ public class MainMenuScript : MonoBehaviour
    
     void Update()
     {
-        if (GameSystem.Life < 1)
+        if (GameSystem.Lives < 1)
         {
             Play.interactable = false;
-        }else if (GameSystem.Life > 0)
+        }else if (GameSystem.Lives > 0)
         {
             Play.interactable = true;
         }
-            Lives.text = ""+GameSystem.Life;
-        if(GameSystem.Life< MaxLivesAllowed && CountDownStarted==false)
+            Lives.text = ""+GameSystem.Lives;
+        if(GameSystem.Lives< MaxLivesAllowed && CountDownStarted==false)
         {
             TimeCounter = TimeToWaitBeforeLivesRestore;
             CountDownGUI.SetActive(true);
@@ -51,7 +51,7 @@ public class MainMenuScript : MonoBehaviour
     {
         yield return new WaitForSeconds(TimeToWaitBeforeLivesRestore);
         CountDownGUI.SetActive(false);
-        GameSystem.Life = MaxLivesAllowed;
+        GameSystem.Lives = MaxLivesAllowed;
         CountDownStarted = false;
     }
 }

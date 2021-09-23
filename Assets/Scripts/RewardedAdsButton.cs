@@ -87,7 +87,7 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         {
             Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
-            GameSystem.Life = GameSystem.Life+1;
+            GameSystem.Lives = GameSystem.Lives+1;
             adShown = true;
             AdLoaded = false;
             AdLoadAttempted = false;
